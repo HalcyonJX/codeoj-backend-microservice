@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: codeoj-backend-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    gateway:
+      routes:
+        - id: codeoj-backend-user-service
+          uri: lb://codeoj-backend-user-service
+          predicates:
+            - Path=/api/user/**
+        - id: codeoj-backend-question-service
+          uri: lb://codeoj-backend-question-service
+          predicates:
+            - Path=/api/question/**
+        - id: codeoj-backend-judge-service
+          uri: lb://codeoj-backend-judge-service
+          predicates:
+            - Path=/api/judge/**
+  main:
+    web-application-type: reactive
+server:
+  port: 8100
